@@ -19,7 +19,7 @@ const protect=(req,res,next)=>{
         // token verifying
         const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
-        // save user in req.
+        // save user in req(changed)
         req.user = decoded;
 
         next();
