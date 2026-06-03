@@ -1,6 +1,7 @@
 import express from "express";
 import dotenv from "dotenv";
 import userRoutes from "./src/routes/userRoutes.js";
+import jobRoutes from "./src/routes/jobRoutes.js";
 import connectDB from "./src/config/db.js";
 import protect from "./src/middleware/authMiddleware.js";
 
@@ -15,6 +16,7 @@ app.get("/",(req,res)=>{
 })
 
 app.use(express.json());
+
 // User Routes
 app.use("/api/users",userRoutes)
 
@@ -25,6 +27,9 @@ app.get("/api/protected", protect, (req, res) => {
         user: req.user,
     });
 });
+
+// JOB Route
+app.use("/api/jobs", jobRoutes);
 
 
 app.listen(5000,()=>{
