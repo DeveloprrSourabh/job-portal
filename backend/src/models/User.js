@@ -15,6 +15,14 @@ const userSchema = new Schema({
         type: String,
         required: true,
     },
+    role: {
+      type: String,
+      enum: ["student", "recruiter"],
+      default: "student",
+    },
+},
+{
+    timestamps: true,
 })
 
 const User =mongoose.model("User",userSchema);

@@ -5,7 +5,7 @@ import jwt from "jsonwebtoken";
 // Register User
 export const registerUser=async(req,res)=>{
     try {
-        const {name,email,password}=req.body;
+        const {name,email,password,role}=req.body;
         const userExists= await User.findOne({email});
         if(userExists){
             return res.status(400).json({
@@ -19,7 +19,7 @@ export const registerUser=async(req,res)=>{
 
         // Creating User
         const user=await User.create({
-            name,email,password:hashedPassword
+            name,email,password:hashedPassword,role,
         })
         res.status(201).json({
             message:"User Register Successfully",
@@ -55,7 +55,10 @@ export const loginUser=async(req,res)=>{
 
         // JWT TOKEN CREATE
         const token = jwt.sign(
-            {id:user._id},
+            {
+                id:user._id,
+                role:user.role,
+            },
             process.env.JWT_SECRET,
             {expiresIn:"1d"}
         );
