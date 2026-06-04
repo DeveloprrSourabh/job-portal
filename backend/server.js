@@ -1,6 +1,7 @@
 import express from "express";
 import dotenv from "dotenv";
 import userRoutes from "./src/routes/userRoutes.js";
+import applicationRoutes from "./src/routes/applicationRoutes.js";
 import jobRoutes from "./src/routes/jobRoutes.js";
 import connectDB from "./src/config/db.js";
 import protect from "./src/middleware/authMiddleware.js";
@@ -30,6 +31,9 @@ app.get("/api/protected", protect, (req, res) => {
 
 // JOB Route
 app.use("/api/jobs", jobRoutes);
+
+// applications route
+app.use("/api/applications", applicationRoutes);
 
 
 app.listen(5000,()=>{
