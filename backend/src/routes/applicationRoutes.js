@@ -1,7 +1,8 @@
 import express from "express";
 import protect from "../middleware/authMiddleware.js";
 import studentOnly  from "../middleware/studentMiddleware.js";
-import { applyJob, getMyApplications } from "../controllers/applicationController.js";
+import recruiterOnly  from "../middleware/recruiterMiddleware.js";
+import { applyJob, getApplicants, getMyApplications } from "../controllers/applicationController.js";
 
 const router = express.Router();
 
@@ -15,5 +16,8 @@ router.get(
   studentOnly,
   getMyApplications
 );
+
+// get applicants
+router.get("/job/:id",protect,recruiterOnly,getApplicants);
 
 export default router;
