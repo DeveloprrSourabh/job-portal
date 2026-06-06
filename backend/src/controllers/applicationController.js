@@ -1,4 +1,5 @@
 import Application from "../models/Application.js";
+import Job from "../models/Job.js";
 
 // apply for application
 export const applyJob=async(req,res)=>{
@@ -46,3 +47,32 @@ export const getMyApplications = async (req, res) => {
     });
   }
 };
+
+// Get Applicants
+export const getApplicants=async (req,res)=>{
+    try {
+        const job = await Job.findById(req.params.id);
+
+        if (!job) {
+            return res.status(404).json({
+                message: "Job not found",
+            });
+        }
+        if (job.recruiter.toString() !== req.user.id) {
+            return res.status(403).json({
+                message: "Not authorized",
+            });
+        }
+
+
+        const applications=await Application.find({
+            job:req.params.id,
+        }).populate("student","name email");
+        
+        res.status(200).json(applications);
+    } catch (error) {
+        res.status(500).json({
+            message:error.message,
+        })
+    }
+}
