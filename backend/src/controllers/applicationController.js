@@ -76,3 +76,61 @@ export const getApplicants=async (req,res)=>{
         })
     }
 }
+
+// Update Application Status
+export const updateApplicationStatus = async (req, res) => {
+  try {
+    const { status } = req.body;
+
+    // status validation
+    const allowedStatus = [
+      "pending",
+      "accepted",
+      "rejected",
+    ];
+
+    if (!allowedStatus.includes(status)) {
+      return res.status(400).json({
+        message: "Invalid status",
+      });
+    }
+
+    // application find
+    const application = await Application.findById(
+      req.params.id
+    );
+
+    if (!application) {
+      return res.status(404).json({
+        message: "Application not found",
+      });
+    }
+
+    // job find
+    const job = await Job.findById(application.job);
+
+    if (!job) {
+      return res.status(404).json({
+        message: "Job not found",
+      });
+    }
+
+    // ownership check
+    if (job.recruiter.toString() !== req.user.id) {
+      return res.status(403).json({
+        message: "Not authorized",
+      });
+    }
+
+    // update status
+    application.status = status;
+
+    await application.save();
+
+    res.status(200).json(application);
+  } catch (error) {
+    res.status(500).json({
+      message: error.message,
+    });
+  }
+};

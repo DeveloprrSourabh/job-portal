@@ -12,6 +12,11 @@ const applicationSchema=new Schema({
       ref: "User",
       required: true,
     },
+    status: {
+      type: String,
+      enum: ["pending", "accepted", "rejected"],
+      default: "pending",
+  },
 },{timestamps:true});
 
 const Application= mongoose.model("Application",applicationSchema);
