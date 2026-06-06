@@ -1,5 +1,5 @@
 import express from "express";
-import { createJob, deleteJob, getAllJobs, getMyJobs } from "../controllers/jobController.js";
+import { createJob, deleteJob, getAllJobs, getMyJobs, updateJob } from "../controllers/jobController.js";
 import protect from "../middleware/authMiddleware.js";
 import recruiterOnly from "../middleware/recruiterMiddleware.js";
 
@@ -26,5 +26,8 @@ router.delete(
   recruiterOnly,
   deleteJob
 );
+
+// Update Job
+router.put("/:id",protect,recruiterOnly,updateJob);
 
 export default router;

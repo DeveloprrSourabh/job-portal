@@ -80,3 +80,36 @@ export const deleteJob = async (req, res) => {
     });
   }
 };
+
+// Update Jobs
+export const updateJob=async(req,res)=>{
+  try {
+    const { title, company, location, description } = req.body;
+    const jobId=req.params.id;
+    const job=await Job.findById(jobId);
+    if(!job){
+      return res.status(404).json({
+        message:"Jon not find",
+      })
+    }
+
+    if (job.recruiter.toString() !== req.user.id) {
+      return res.status(403).json({
+        message: "Not authorized",
+      });
+    }
+
+    job.title = title || job.title;
+    job.company = company || job.company;
+    job.location = location || job.location;
+    job.description = description || job.description;
+
+    const updatedJob = await job.save();
+    res.status(200).json(updatedJob);
+
+  }catch (error) {
+    res.status(500).json({
+      message: error.message,
+    });
+  }
+}
