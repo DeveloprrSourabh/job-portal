@@ -134,3 +134,4 @@ export const updateApplicationStatus = async (req, res) => {
     });
   }
 };
+
