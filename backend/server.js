@@ -5,6 +5,7 @@ import applicationRoutes from "./src/routes/applicationRoutes.js";
 import jobRoutes from "./src/routes/jobRoutes.js";
 import connectDB from "./src/config/db.js";
 import protect from "./src/middleware/authMiddleware.js";
+import dashboardRoutes from "./src/routes/dashboardRoutes.js";
 
 dotenv.config();
 
@@ -34,6 +35,12 @@ app.use("/api/jobs", jobRoutes);
 
 // applications route
 app.use("/api/applications", applicationRoutes);
+
+// Dashboard Route
+app.use("/api/dashboard", dashboardRoutes);
+
+// Resume uploade route
+app.use("/uploads", express.static("uploads"));
 
 
 app.listen(5000,()=>{
