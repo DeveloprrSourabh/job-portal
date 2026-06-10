@@ -5,15 +5,39 @@ import heroImg from './assets/hero.png'
 import './App.css'
 import Navbar from './components/Navbar'
 import Home from './pages/Home'
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Login from './pages/Login'
+import Register from './pages/Register'
+import Jobs from './pages/Job'
+
 
 function App() {
   const [count, setCount] = useState(0)
 
   return (
-    <>
+    <BrowserRouter>
       <Navbar />
-      <Home />
-    </>
+
+      <Routes>
+        <Route path="/" element={<Home />} />
+
+      {/* User Routes */}
+        <Route
+          path="/login"
+          element={<Login />}
+        />
+
+        <Route
+          path="/register"
+          element={<Register />}
+        />
+        {/* Job ROutes */}
+        <Route
+          path="/jobs"
+          element={<Jobs />}
+      />
+      </Routes>
+    </BrowserRouter>
   )
 }
 

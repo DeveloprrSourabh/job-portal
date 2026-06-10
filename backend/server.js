@@ -6,11 +6,13 @@ import jobRoutes from "./src/routes/jobRoutes.js";
 import connectDB from "./src/config/db.js";
 import protect from "./src/middleware/authMiddleware.js";
 import dashboardRoutes from "./src/routes/dashboardRoutes.js";
-
+import cors from "cors";
 dotenv.config();
 
 connectDB();
 const app=express();
+app.use(cors());
+
 const PORT = process.env.PORT || 5000;
 
 app.get("/",(req,res)=>{
