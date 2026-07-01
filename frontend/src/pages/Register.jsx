@@ -22,7 +22,10 @@ const handleSubmit = async (e) => {
     );
 
     console.log(response.data);
-
+    setName("");
+    setEmail("");
+    setPassword("");
+    setRole("student");
     alert("Registration Successful");
   } catch (error) {
     console.log(error.response?.data);

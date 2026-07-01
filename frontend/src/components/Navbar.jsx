@@ -1,6 +1,26 @@
 import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { useContext } from "react";
+import { AuthContext } from "../context/AuthContext";
 
 const Navbar = () => {
+  const { isLoggedIn, setIsLoggedIn } = useContext(AuthContext);
+
+  // useEffect(() => {
+  //   const token = localStorage.getItem("token");
+
+  //   if (token) {
+  //     setIsLoggedIn(true);
+  //   }
+  // }, []);
+
+  // Logout Function
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    localStorage.removeItem("user");
+
+    setIsLoggedIn(false);
+  };
   return (
     <nav className="flex justify-between items-center px-8 py-4 border-b">
       <h1 className="text-2xl font-bold">
@@ -10,8 +30,21 @@ const Navbar = () => {
       <div className="flex gap-6">
         <Link to="/">Home</Link>
         <Link to="/jobs">Jobs</Link>
-        <Link to="/login">Login</Link>
-        <Link to="/register">Register</Link>
+        {
+          isLoggedIn ? (
+            <button
+              onClick={handleLogout}
+              className="text-red-500"
+            >
+              Logout
+          </button>
+          ) : (
+            <>
+              <Link to="/login">Login</Link>
+              <Link to="/register">Register</Link>
+            </>
+          )
+        }
       </div>
     </nav>
   );
