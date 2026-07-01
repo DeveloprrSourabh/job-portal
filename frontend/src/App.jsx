@@ -9,6 +9,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Login from './pages/Login'
 import Register from './pages/Register'
 import Jobs from './pages/Job'
+import ProtectedRoute from './components/ProtectedRoute'
 
 
 function App() {
@@ -32,9 +33,13 @@ function App() {
           element={<Register />}
         />
         {/* Job ROutes */}
-        <Route
-          path="/jobs"
-          element={<Jobs />}
+      <Route
+        path="/jobs"
+        element={
+          <ProtectedRoute>
+            <Jobs />
+          </ProtectedRoute>
+        }
       />
       </Routes>
     </BrowserRouter>

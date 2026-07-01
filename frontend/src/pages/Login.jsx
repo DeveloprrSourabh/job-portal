@@ -1,22 +1,50 @@
-import React, { useState } from 'react'
+import { useState } from "react";
+import api from "../services/api";
+import { useNavigate } from "react-router-dom";
+import { useContext } from "react";
+import { AuthContext } from "../context/AuthContext";
 
 const Login = () => {
-    const [email,setEmail]=useState("");
-    const [password,setPassword]=useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const navigate = useNavigate();
+  const { setIsLoggedIn } = useContext(AuthContext);
 
-    const handleSubmit = (e) => {
-    e.preventDefault();
+const handleSubmit = async (e) => {
+  e.preventDefault();
 
-    console.table({
+  try {
+    const response = await api.post("/users/login", {
       email,
       password,
     });
-  };
+
+    console.log(response.data);
+    localStorage.setItem(
+      "token",
+      response.data.token
+    );
+    localStorage.setItem(
+      "user",
+      JSON.stringify(response.data.user)
+    );
+    alert("Login Successful");
+    setIsLoggedIn(true);
+    navigate("/");
+  } catch (error) {
+    console.log(error.response?.data);
+
+    alert(
+      error.response?.data?.message ||
+      "Something went wrong"
+    );
+  }
+};
+
   return (
-    <>
-        <div className="max-w-md mx-auto mt-10 border p-6 rounded-lg">
+    <div className="max-w-md mx-auto mt-10 border p-6 rounded-lg">
       <h1 className="text-2xl font-bold mb-6">
-        Register
+        Login
       </h1>
 
       <form onSubmit={handleSubmit}>
@@ -42,14 +70,13 @@ const Login = () => {
 
         <button
           type="submit"
-          className="bg-blue-500 text-white px-4 py-2 rounded w-full"
+          className="bg-blue-500 text-white w-full py-2 rounded"
         >
           Login
         </button>
       </form>
     </div>
-    </>
-  )
-}
+  );
+};
 
-export default Login
+export default Login;
