@@ -6,21 +6,16 @@ import { AuthContext } from "../context/AuthContext";
 const Navbar = () => {
   const { isLoggedIn, setIsLoggedIn } = useContext(AuthContext);
 
-  // useEffect(() => {
-  //   const token = localStorage.getItem("token");
 
-  //   if (token) {
-  //     setIsLoggedIn(true);
-  //   }
-  // }, []);
 
   // Logout Function
-  const handleLogout = () => {
-    localStorage.removeItem("token");
-    localStorage.removeItem("user");
+const handleLogout = () => {
+  localStorage.removeItem("token");
+  localStorage.removeItem("user");
 
-    setIsLoggedIn(false);
-  };
+  setIsLoggedIn(false);
+  setUser(null);
+};
   return (
     <nav className="flex justify-between items-center px-8 py-4 border-b">
       <h1 className="text-2xl font-bold">

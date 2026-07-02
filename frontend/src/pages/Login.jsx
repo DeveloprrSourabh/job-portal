@@ -8,7 +8,7 @@ const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
-  const { setIsLoggedIn } = useContext(AuthContext);
+  const { setIsLoggedIn, setUser } = useContext(AuthContext);
 
 const handleSubmit = async (e) => {
   e.preventDefault();
@@ -30,6 +30,7 @@ const handleSubmit = async (e) => {
     );
     alert("Login Successful");
     setIsLoggedIn(true);
+    setUser(response.data.user);
     navigate("/");
   } catch (error) {
     console.log(error.response?.data);
