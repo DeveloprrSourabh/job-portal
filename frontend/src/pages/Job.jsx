@@ -6,12 +6,15 @@ const Jobs = () => {
   const [jobs, setJobs] = useState([]);
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState("");
+  const [page, setPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
 
   const fetchJobs = async () => {
     try {
-      const response = await api.get(`/jobs?keyword=${search}`);
+      const response = await api.get(`/jobs?keyword=${search}&page=${page}`);
 
       setJobs(response?.data.jobs);
+      setTotalPages(response.data.totalPages);
       console.log(response);
       console.log(response.data);
       setLoading(false);
@@ -23,7 +26,7 @@ const Jobs = () => {
   };
   useEffect(() => {
     fetchJobs();
-  }, []);
+  }, [page]);
 
   if (loading) {
     return <h1 className="text-center text-2xl mt-10">Loading...</h1>;
@@ -52,6 +55,28 @@ const Jobs = () => {
         {jobs?.map((job) => (
           <JobCard key={job.id} {...job} />
         ))}
+      </div>
+      {/* Pagination */}
+      <div className="flex justify-center items-center gap-4 mt-8">
+        <button
+          onClick={() => setPage(page - 1)}
+          disabled={page === 1}
+          className="bg-gray-300 px-4 py-2 rounded disabled:opacity-50"
+        >
+          Previous
+        </button>
+
+        <span className="font-semibold">
+          Page {page} of {totalPages}
+        </span>
+
+        <button
+          onClick={() => setPage(page + 1)}
+          disabled={page === totalPages}
+          className="bg-blue-600 text-white px-4 py-2 rounded disabled:opacity-50"
+        >
+          Next
+        </button>
       </div>
     </div>
   );
