@@ -4,7 +4,12 @@ import { useContext } from "react";
 import { AuthContext } from "../context/AuthContext";
 
 const Navbar = () => {
-  const { isLoggedIn, setIsLoggedIn } = useContext(AuthContext);
+  const {
+  isLoggedIn,
+  setIsLoggedIn,
+  user,
+  setUser,
+} = useContext(AuthContext);
 
 
 
@@ -25,6 +30,9 @@ const handleLogout = () => {
       <div className="flex gap-6">
         <Link to="/">Home</Link>
         <Link to="/jobs">Jobs</Link>
+        {user?.role === "recruiter" && (
+  <Link to="/dashboard">Dashboard</Link>
+)}
         {
           isLoggedIn ? (
             <button
