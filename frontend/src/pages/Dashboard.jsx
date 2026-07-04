@@ -9,9 +9,8 @@ const Dashboard = () => {
   const fetchMyJobs = async () => {
     try {
       const response = await api.get("/jobs/my-jobs");
-        console.log(response);
-        
-      setJobs(response.data);
+      //   console.log(response);
+      setJobs(response.data.jobs);
     } catch (error) {
       console.log(error.response?.data || error.message);
     } finally {
@@ -49,39 +48,38 @@ const Dashboard = () => {
               className="border rounded-lg p-4 flex justify-between items-center"
             >
               <div>
-  <h2 className="text-xl font-semibold">
-    {job.title}
-  </h2>
+                <h2 className="text-xl font-semibold">{job.title}</h2>
 
-  <p>
-    <strong>Company:</strong> {job.company}
-  </p>
+                <p>
+                  <strong>Company:</strong> {job.company}
+                </p>
 
-  <p>
-    <strong>Location:</strong> {job.location}
-  </p>
+                <p>
+                  <strong>Location:</strong> {job.location}
+                </p>
 
-  <p>
-    <strong>Salary:</strong> ₹{job.salary}
-  </p>
+                <p>
+                  <strong>Salary:</strong> ₹{job.salary}
+                </p>
 
-  <p>
-    <strong>Experience:</strong> {job.experience}
-  </p>
+                <p>
+                  <strong>Experience:</strong> {job.experience}
+                </p>
 
-  <p>
-    <strong>Type:</strong> {job.jobType}
-  </p>
+                <p>
+                  <strong>Type:</strong> {job.jobType}
+                </p>
 
-  <p className="text-gray-500 mt-2">
-    {job.description}
-  </p>
-</div>
+                <p className="text-gray-500 mt-2">{job.description}</p>
+              </div>
 
               <div className="flex gap-3">
-                <button className="bg-yellow-500 text-white px-4 py-2 rounded">
+                <Link
+                  to={`/dashboard/edit-job/${job._id}`}
+                  className="bg-yellow-500 text-white px-4 py-2 rounded"
+                >
                   Edit
-                </button>
+                </Link>
 
                 <button className="bg-red-500 text-white px-4 py-2 rounded">
                   Delete
