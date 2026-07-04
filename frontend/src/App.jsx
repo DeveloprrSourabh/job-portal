@@ -12,6 +12,7 @@ import Jobs from "./pages/Job";
 import ProtectedRoute from "./components/ProtectedRoute";
 import Dashboard from "./pages/Dashboard";
 import CreateJob from "./pages/CreateJob";
+import EditJob from "./pages/EditJob";
 
 function App() {
   const [count, setCount] = useState(0);
@@ -51,6 +52,15 @@ function App() {
           element={
             <ProtectedRoute role="recruiter">
               <CreateJob />
+            </ProtectedRoute>
+          }
+        />
+        {/* Edit Job */}
+        <Route
+          path="/dashboard/edit-job/:id"
+          element={
+            <ProtectedRoute role="recruiter">
+              <EditJob />
             </ProtectedRoute>
           }
         />
